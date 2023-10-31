@@ -9,6 +9,10 @@ const userSchema = new mongoose.Schema({
   },
   username: {
     type: String,
+    required: [true, "Your username is required"],
+  },
+  password: {
+    type: String,
     required: [true, "Your password is required"],
   },
   createdAt: {
@@ -17,11 +21,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const model = mongoose.model(
-  "User",
-  userSchema.pre("save", async () => {
-    this.password = await bcrypt.hash(this.password, 12);
-  })
-);
+userSchema.pre("save", async function () {
+  this.password = await bcrypt.hash(this.password, 12);
+});
 
-export default model;
+module.exports = mongoose.model("User", userSchema);

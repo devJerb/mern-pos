@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
+const cookieParser = require('cookie-parser');
+const auth = require('./routes/auth');
 
 const PORT = process.env.PORT || 8080;
 
@@ -27,4 +29,8 @@ app.use(
   }),
 );
 
+app.use(cookieParser());
+
 app.use(express.json());
+
+app.use('/', auth);
