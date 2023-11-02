@@ -1,6 +1,7 @@
 const { response } = require("express");
 const User = require("../models/model");
 const { createSecretToken } = require("../util/secretToken");
+const bcrypt = require("bcryptjs");
 
 const Signup = async (req, res, next) => {
   try {
@@ -39,7 +40,7 @@ const Login = async (req, res, next) => {
       return res.json({ message: "Incorrect email or password" });
     }
     const token = createSecretToken(user._id);
-    response.cookie("token", token, {
+    res.cookie("token", token, {
       withCredentials: true,
       httpOnly: false,
     });
@@ -53,5 +54,5 @@ const Login = async (req, res, next) => {
 
 module.exports = {
   Signup,
-  Login,
+  Login
 }
