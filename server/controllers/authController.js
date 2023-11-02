@@ -1,7 +1,7 @@
 const User = require("../models/model");
 const { createSecretToken } = require("../util/secretToken");
 
-module.exports.Signup = async (req, res, next) => {
+const Signup = async (req, res, next) => {
   try {
     const { email, password, username, createdAt } = req.body;
     const existingUser = await User.findOne({ email });
@@ -22,3 +22,7 @@ module.exports.Signup = async (req, res, next) => {
     console.error(error);
   }
 };
+
+module.exports = {
+  Signup
+}
